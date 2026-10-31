@@ -127,6 +127,17 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
   #bg{display:none}
   html{scroll-behavior:auto}
 }
+
+.proof{display:grid;gap:10px}
+.proof div{display:grid;grid-template-columns:150px 1fr;gap:14px;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:12px 16px;font-size:14.5px}
+.proof b{color:var(--strong)}
+.proof a{color:var(--strong);border-bottom:1px solid var(--a1)}
+.proof a:hover{color:var(--a2);border-color:var(--a2)}
+@media(max-width:520px){.proof div{grid-template-columns:1fr;gap:2px}}
+.live{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.live a{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:13px;font-weight:650;color:var(--strong);transition:border-color .2s,background .2s}
+.live a::before{content:"";width:7px;height:7px;border-radius:50%;background:#22c55e}
+.live a:hover{border-color:var(--a2);background:var(--panel)}
 </style>
 </head>
 <body>
@@ -141,6 +152,7 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
       <p class="tag">I build products end to end, from the database and API to a deployed link.</p>
       <nav class="spy" aria-label="Sections">
         <a href="#about">About</a>
+        <a href="#stack">Stack proof</a>
         <a href="#now">Right now</a>
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
@@ -165,8 +177,23 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
       <p>I like taking an idea all the way to a live link: the schema, the API, the interface and the deployment. My work spans <b>React and Next.js</b> frontends, <b>FastAPI and Node.js</b> backends, <b>PostgreSQL, MySQL and Redis</b>, and AI features built on LLMs and retrieval.</p>
       <div class="stat rv">
         <div><strong data-count="14" data-suf="+">14+</strong><span>projects built</span></div>
-        <div><strong data-count="4" data-suf="">4</strong><span>internships</span></div>
+        <div><strong data-count="3" data-suf="">3</strong><span>internships</span></div>
         <div><strong data-count="41" data-suf="">41</strong><span>certifications</span></div>
+      </div>
+    </section>
+
+
+    <section id="stack">
+      <h3 class="hd">Stack proof</h3>
+      <p>Every skill below is backed by something deployed or on GitHub that you can open.</p>
+      <div class="proof rv">
+        <div><b>Node.js and TypeScript</b><span>Email job scheduler on Express and TypeScript with a typed API, and xHire on Node.js with Prisma. <a href="https://github.com/ayushanand27/xhire">xHire code</a></span></div>
+        <div><b>MySQL and databases</b><span>MySQL for the scheduler's job records, PostgreSQL in xHire and SMRA, Redis counters for rate limits, and Elasticsearch for email search.</span></div>
+        <div><b>API design and docs</b><span>Documented REST APIs with interactive docs. <a href="https://nirdesh-backend.onrender.com/docs">Nirdesh API docs</a></span></div>
+        <div><b>React, Next.js, Tailwind</b><span>Live frontends built with them. <a href="https://sbi-setu.onrender.com">SBI Setu</a> · <a href="https://sameask.vercel.app">SameAsk</a> · <a href="https://the-people-app-website.vercel.app">The People App</a></span></div>
+        <div><b>Git and CI</b><span>Over 50 repositories on <a href="https://github.com/ayushanand27">GitHub</a>, and GitHub Actions CI with tests, CodeQL and secret scanning on the scheduler project.</span></div>
+        <div><b>Cloud and Docker</b><span>Deployed on AWS EC2 behind Nginx with HTTPS, and on Azure Container Apps from a Docker image.</span></div>
+        <div><b>Queues and scale</b><span>BullMQ and Redis for delayed jobs, concurrency control, per-sender hourly limits and restart-safe scheduling.</span></div>
       </div>
     </section>
 
@@ -185,7 +212,7 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
 
       <div class="item rv">
         <div class="when">Mar 2026 to Jun 2026</div>
-        <h4>GenAI Fullstack Intern <small>SmartSkale</small></h4>
+        <h4>GenAI Fullstack Intern <small><a class="lk" href="https://smartskale.tech/">SmartSkale</a></small></h4>
         <p>Built and deployed a full-stack interview platform on AWS EC2 with Nginx, HTTPS and JWT-based candidate and recruiter roles. Wrote database migrations with Alembic and added proctoring, speech transcription and a code-execution service, backed by unit and integration tests.</p>
         <ul class="chips"><li>FastAPI</li><li>React</li><li>TypeScript</li><li>Alembic</li><li>AWS EC2</li><li>Nginx</li></ul>
         <div class="links"><a href="https://ai-interview-bot.duckdns.org">Live</a><a href="https://github.com/ayushanand27/AI-interview-bot">Code</a></div>
@@ -193,20 +220,13 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
 
       <div class="item rv">
         <div class="when">Feb 2026 to Jul 2026</div>
-        <h4>Salesforce Launchpad Trainee <small>PwC Advisory Launchpad</small></h4>
+        <h4>Salesforce Launchpad Trainee <small><a class="lk" href="https://www.pwc.in/">PwC Acceleration Center India</a></small></h4>
         <p>Six-month programme at PwC Acceleration Center India covering Generative AI and modern data systems, with hands-on Salesforce Trailhead activities.</p>
       </div>
 
       <div class="item rv">
-        <div class="when">Sep 2025 to Oct 2025</div>
-        <h4>Data Analyst Intern <small>Elevate Labs</small></h4>
-        <p>Virtual data analytics internship working with Tableau and MySQL.</p>
-        <ul class="chips"><li>Tableau</li><li>MySQL</li></ul>
-      </div>
-
-      <div class="item rv">
         <div class="when">Apr 2025 to Jun 2025</div>
-        <h4>Internshala Student Partner <small>Internshala, part-time</small></h4>
+        <h4>Internshala Student Partner <small><a class="lk" href="https://internshala.com/">Internshala</a>, part-time</small></h4>
         <p>Represented Internshala on the Manipal University Jaipur campus.</p>
       </div>
 
@@ -219,6 +239,13 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
 
     <section id="projects">
       <h3 class="hd">Projects</h3>
+      <div class="live rv">
+        <a href="https://ai-interview-bot.duckdns.org">SmartSkale platform</a>
+        <a href="https://sbi-setu.onrender.com">SBI Setu</a>
+        <a href="https://nirdesh-frontend.onrender.com">Nirdesh</a>
+        <a href="https://sameask.vercel.app">SameAsk</a>
+        <a href="https://the-people-app-website.vercel.app">The People App</a>
+      </div>
 
       <div class="item rv">
         <h4>Email Job Scheduler <span class="badge">Outbox Labs</span></h4>
