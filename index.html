@@ -141,6 +141,28 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
 .live a{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:13px;font-weight:650;color:var(--strong);transition:border-color .2s,background .2s}
 .live a::before{content:"";width:7px;height:7px;border-radius:50%;background:#22c55e}
 .live a:hover{border-color:var(--a2);background:var(--panel)}
+
+/* popup details */
+.item.card{cursor:pointer}
+.item.card .sum{font-size:14px;margin:0 0 8px}
+.item.card .more-cue{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--a2);letter-spacing:.02em}
+.item.card:hover .more-cue{text-decoration:underline}
+.item.card .chips{margin-top:6px}
+.more a{cursor:pointer}
+dialog#dlg{border:1px solid var(--line);border-radius:18px;padding:0;background:var(--panel);color:var(--ink);width:min(660px,92vw);max-height:86vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+dialog#dlg::backdrop{background:rgba(5,5,15,.62);backdrop-filter:blur(6px)}
+dialog#dlg[open]{animation:pop .22s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+#dlg .dlg-in{padding:28px 28px 24px}
+#dlg h4{margin:0 0 6px;font-size:22px;line-height:1.25;color:var(--strong)}
+#dlg h4 small{display:block;font-size:14px;font-weight:500;color:var(--muted);margin-top:4px}
+#dlg p{font-size:15.5px;line-height:1.7;margin:12px 0}
+#dlg .x{position:sticky;top:10px;float:right;margin:10px 10px 0 0;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--strong);font-size:18px;line-height:1;cursor:pointer;z-index:2}
+#dlg .x:hover{border-color:var(--a2);color:var(--a2)}
+#dlg .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+#dlg .btns a{padding:9px 16px;border-radius:10px;font-weight:650;font-size:14px;border:1px solid var(--line);color:var(--strong)}
+#dlg .btns a.pri{background:var(--grad);border-color:transparent;color:#fff}
+#dlg .btns a:hover{border-color:var(--a2)}
 </style>
 </head>
 <body>
@@ -467,6 +489,41 @@ header.side h1 span{background-size:200% 100%;animation:shine 6s linear infinite
       requestAnimationFrame(draw);
     })();
   }
+})();
+</script>
+<dialog id="dlg" aria-label="Details"><button class="x" type="button" aria-label="Close">&times;</button><div class="dlg-in"></div></dialog>
+<script>
+(function(){
+  var dlg=document.getElementById('dlg'),box=dlg.querySelector('.dlg-in');
+  function open(html){box.innerHTML=html;document.body.style.overflow='hidden';
+    if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}dlg.scrollTop=0;}
+  function close(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}document.body.style.overflow='';}
+  dlg.querySelector('.x').addEventListener('click',close);
+  dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
+  dlg.addEventListener('close',function(){document.body.style.overflow=''});
+  function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  [].slice.call(document.querySelectorAll('#experience .item,#projects>.item')).forEach(function(it){
+    var h=it.querySelector('h4'),p=it.querySelector('p'),when=it.querySelector('.when'),chips=it.querySelector('.chips'),links=it.querySelector('.links');
+    if(!h||!p)return;
+    var full='<h4>'+h.innerHTML+'</h4>'+(when?'<div class="when">'+when.innerHTML+'</div>':'')+'<p>'+p.innerHTML+'</p>'+(chips?chips.outerHTML:'')+(links?links.outerHTML:'');
+    var txt=p.textContent.trim();var m=txt.match(/^.{40,150}?[.!?](\s|$)/);var sum=m?m[0].trim():(txt.length>150?txt.slice(0,147)+'...':txt);
+    var small=chips?[].slice.call(chips.children,0,4).map(function(c){return '<li>'+c.innerHTML+'</li>'}).join(''):'';
+    it.innerHTML=(when?'<div class="when">'+when.innerHTML+'</div>':'')+'<h4>'+h.innerHTML+'</h4><p class="sum">'+esc(sum)+'</p>'+(small?'<ul class="chips">'+small+'</ul>':'')+'<span class="more-cue">View details &rarr;</span>';
+    it.classList.add('card');it.setAttribute('tabindex','0');it.setAttribute('role','button');
+    it.addEventListener('click',function(e){if(e.target.closest('a'))return;open(full)});
+    it.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(full)}});
+  });
+  [].slice.call(document.querySelectorAll('.more a')).forEach(function(a){
+    var b=a.querySelector('b');if(!b)return;
+    var title=b.textContent;var rest=a.innerHTML.replace(b.outerHTML,'').trim();
+    var href=a.getAttribute('href');var live=/t\.me|vercel|onrender|streamlit/.test(href);
+    var label=/t\.me/.test(href)?'Open on Telegram':'View on GitHub';
+    a.setAttribute('href',href);
+    var plain=rest.replace(/<[^>]+>/g,'').trim();var mm=plain.match(/^.{30,95}?[.!?](\s|$)/);var short=mm?mm[0].trim():(plain.length>95?plain.slice(0,92)+'...':plain);
+    a.innerHTML='<b>'+esc(title)+'</b> <span style="display:block;font-size:13px;margin-top:2px">'+esc(short)+'</span>';
+    a.addEventListener('click',function(e){e.preventDefault();
+      open('<h4>'+esc(title)+'</h4><p>'+rest+'</p><div class="btns"><a class="pri" href="'+href+'" target="_blank" rel="noopener">'+label+'</a></div>')});
+  });
 })();
 </script>
 </body>
